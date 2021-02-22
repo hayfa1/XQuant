@@ -24,21 +24,25 @@ def SearchNumberInTable(SizeTable,table,Number):
                    
                     # handle the exception 
                     try:
+                        #Search in top cell
                         if((Index_i+1<n) and (number[k]==table[Index_i+1][Index_j]) and not visited[Index_i+1][Index_j]):
                             Index_i=Index_i+1
                             path.append((Index_i,Index_j))
                             # Make the cell visited to not use it more than one in the same solution
                             visited[Index_i][Index_j]= True
+                        #Search in Buttom cell
                         elif((Index_i-1>=0) and (number[k]==table[Index_i-1][Index_j]) and not visited[Index_i-1][Index_j]):
                             Index_i=Index_i-1
                             path.append((Index_i,Index_j))
                             # Make the cell visited to not use it again
                             visited[Index_i][Index_j]= True
+                        #Search in right cell
                         elif((Index_j+1<n) and(number[k]==table[Index_i][Index_j+1]) and not visited[Index_i][Index_j+1]):
                             Index_j=Index_j+1
                             path.append((Index_i,Index_j))
                             # Make the cell visited to not use it again
                             visited[Index_i][Index_j]= True
+                        #Search in left cell
                         elif((Index_j-1>=0) and (number[k]==table[Index_i][Index_j-1]) and not visited[Index_i][Index_j-1]):
                             Index_j=Index_j-1
                             path.append((Index_i,Index_j))
@@ -68,6 +72,7 @@ def SearchNumberInTable(SizeTable,table,Number):
 
 
 if __name__ == "__main__":
+    #Table=np.random.randint(10, size=(10,10))
     Table=([[1, 5, 7, 4, 6, 2, 2, 6, 7, 2],
             [2, 8, 2, 9, 3, 9, 8, 5, 6, 2],
             [3, 4, 0, 2, 4, 3, 0, 2, 6, 7],
@@ -78,7 +83,8 @@ if __name__ == "__main__":
             [0, 5, 7, 6, 0, 6, 9, 9, 6, 7],
             [5, 5, 8, 5, 0, 8, 5, 3, 5, 5],
             [0, 0, 6, 3, 3, 3, 9, 5, 9, 9]])
-    #table=np.ones((10,10))
+    Table1=np.random.randint(10, size=(10,10))
+    #print(Table1)
     #Number=8292
     Number=input("Please enter the number that you want to find ")
     AllSolutions=SearchNumberInTable(10,Table,Number)
