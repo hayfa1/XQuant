@@ -13,37 +13,39 @@ def SearchNumberInTable(SizeTable,table,Number):
             #Defining visited array to keep track of already visited indexes
             visited = [[False for m in range (n)] for y in range (n)]
             #Search for the first number
-            if (table[i][j]==number[0]):
-                #Put the first number indexes in variables in order to save them
-                x=i
-                y=j
+            if (table[i][j]==number[0] and not visited[i][j]):
                 # Make the cell visited to not use it more than one in the same solution
                 visited[i][j]= True
+                #Put the first number indexes in variables in order to save them
+                Index_i=i
+                Index_j=j
                 k=1
                 while k<len(number):
-                    # handle the exception  where the table borders are exceeded by i and j
+                   
+                    # handle the exception 
                     try:
-                        if((number[k]==table[i+1][j]) and not visited[i+1][j]):
-                            i=i+1
-                            path.append((i,j))
+                        if((Index_i+1<n) and (number[k]==table[Index_i+1][Index_j]) and not visited[Index_i+1][Index_j]):
+                            Index_i=Index_i+1
+                            path.append((Index_i,Index_j))
+                            # Make the cell visited to not use it more than one in the same solution
+                            visited[Index_i][Index_j]= True
+                        elif((Index_i-1>=0) and (number[k]==table[Index_i-1][Index_j]) and not visited[Index_i-1][Index_j]):
+                            Index_i=Index_i-1
+                            path.append((Index_i,Index_j))
                             # Make the cell visited to not use it again
-                            visited[i][j]= True
-                        elif((i-1>=0) and (number[k]==table[i-1][j]) and not visited[i-1][j]):
-                            i=i-1
-                            path.append((i,j))
+                            visited[Index_i][Index_j]= True
+                        elif((Index_j+1<n) and(number[k]==table[Index_i][Index_j+1]) and not visited[Index_i][Index_j+1]):
+                            Index_j=Index_j+1
+                            path.append((Index_i,Index_j))
                             # Make the cell visited to not use it again
-                            visited[i][j]= True
-                        elif((number[k]==table[i][j+1]) and not visited[i][j+1]):
-                            j=j+1
-                            path.append((i,j))
+                            visited[Index_i][Index_j]= True
+                        elif((Index_j-1>=0) and (number[k]==table[Index_i][Index_j-1]) and not visited[Index_i][Index_j-1]):
+                            Index_j=Index_j-1
+                            path.append((Index_i,Index_j))
                             # Make the cell visited to not use it again
-                            visited[i][j]= True
-                        elif((j-1>=0) and (number[k]==table[i][j-1]) and not visited[i][j-1]):
-                            j=j-1
-                            path.append((i,j))
-                            # Make the cell visited to not use it again
-                            visited[i][j]= True
+                            visited[Index_i][Index_j]= True
                         else:
+                            #print("no")
                             break;
                         #continue
                         k+=1
@@ -52,7 +54,7 @@ def SearchNumberInTable(SizeTable,table,Number):
                 #if all the input numbers were founded, their indexes will be saved in a list
                 if k==len(number):
                     # Concatenate the first number indexes with the other indexes
-                    L=[(x,y)]+path
+                    L=[(i,j)]+path
                     # Save the indexes into a list
                     AllSolutions.append(L)
                     #Clear the list
@@ -63,6 +65,7 @@ def SearchNumberInTable(SizeTable,table,Number):
                     path=[]
     print("The input was find "+ str(len(AllSolutions))+" time(s)")
     return AllSolutions
+
 
 if __name__ == "__main__":
     Table=([[1, 5, 7, 4, 6, 2, 2, 6, 7, 2],
